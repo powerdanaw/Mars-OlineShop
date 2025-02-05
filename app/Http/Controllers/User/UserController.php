@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Slider;
 use App\Models\TextBaner;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\Auth;
