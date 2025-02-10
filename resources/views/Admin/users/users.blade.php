@@ -24,7 +24,7 @@
                                 <tr>
                                     <th>نام </th>
                                     <th>ایمیل</th>
-                                    <th>رمز</th>
+                                    {{-- <th>رمز</th> --}}
                                     <th>مجموع سفارش</th>
                                     <th>وضعیت</th>
                                     <th>تاریخ غضویت</th>
@@ -37,7 +37,7 @@
                                     <td>{{ $user->name}}</td>
                                     <td>{{ $user->email}}</td>
     
-                                    <td>{{ $user->password}}</td>
+                                    {{-- <td>{{ $user->password}}</td> --}}
                                     <td>{{ $user->orders->count()}} عدد</td>
                                        <td>
                                         @if($user->user_type == 0) مشتری @else ادمین @endif

@@ -19,6 +19,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -35,23 +36,35 @@ class AuthController extends Controller
 
         //Validate
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
         ]);
 
-        $emailuser = User::where('email', $request->email)->first();
+         // ایجاد کاربر جدید
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // هش کردن رمز عبور
+        ]);
 
-        if($emailuser == Null ){
+        // ورود خودکار کاربر
+        Auth::login($user);
 
-            $inputs = $request->all();
-            $user = User::create($inputs);
-            Auth::login($user);
-            return redirect()->route("home");
-        }
-        else{
-            return redirect()->route('registerForm')->with('error','کاربری با این ایمیل از قبل وجود دارد');
-        }
+        return redirect()->route("home");
+
+        // $emailuser = User::where('email', $request->email)->first();
+
+        // if($emailuser == Null ){
+
+        //     $inputs = $request->all();
+        //     $user = User::create($inputs);
+        //     Auth::login($user);
+        //     return redirect()->route("home");
+        // }
+        // else{
+        //     return redirect()->route('registerForm')->with('error','کاربری با این ایمیل از قبل وجود دارد');
+        // }
     }
 
     //------------------------- Login --------------------///
